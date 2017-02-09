@@ -5,6 +5,7 @@ espn.bookmarklets = espn.bookmarklets || {};
 
 	var id = 'global-scoreboard',
 		FAV_COLOR = '#d4af37',
+	    	TOP_COLOR = '#ff0000',
 		_loaded = espn.bookmarklets[id] === true;
 
 	function _debug() {
@@ -36,13 +37,15 @@ espn.bookmarklets = espn.bookmarklets || {};
 
 							var isFavorite = game.get('isFavorite') === true,
 							    	isTopEvent = game.get('isTopEvent') === true,
+							    	styles = [],
 							    	star = isFavorite ? ' \u2605' : '',
-							    	top = isTopEvent ? ' \u25B2' : '',
-								color = isFavorite ? FAV_COLOR : '';
+							    	top = isTopEvent ? '%c \u25B2' : '%c'
+								color = isFavorite ? FAV_COLOR : '',
+								secondaryColor = isTopEvent ? TOP_COLOR : '';
 
 							var str = '%cgame ' + teams.join(' vs ') + ' (' + game.get('id') + ')' + star + top;
 
-							console.groupCollapsed(str, 'color:' + color + ';');
+							console.groupCollapsed(str, 'color:' + color + ';', 'color:' + TOP_COLOR + ';');
 							console.log(game.toJSON());
 							// debug teams
 							game.get('teams').each(function(team) {
