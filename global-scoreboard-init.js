@@ -35,18 +35,22 @@ espn.bookmarklets = espn.bookmarklets || {};
 							});
 
 							var isFavorite = game.get('isFavorite') === true,
+							    	isTopEvent = game.get('isTopEvent') === true,
+							    	star = isFavorite ? ' \u2605' : '',
+							    	top = isTopEvent ? ' \u25B2' : '',
 								color = isFavorite ? FAV_COLOR : '';
 
-							var str = '%cgame ' + teams.join(' vs ') + ' (' + game.get('id') + ')';
+							var str = '%cgame ' + teams.join(' vs ') + ' (' + game.get('id') + ')' + star + top;
 
 							console.groupCollapsed(str, 'color:' + color + ';');
 							console.log(game.toJSON());
 							// debug teams
 							game.get('teams').each(function(team) {
 								var isFavorite = team.get('isFavorite') === true,
+								    	star = isFavorite ? ' \u2605' : '',
 									color = isFavorite ? FAV_COLOR : '';
 
-								console.groupCollapsed('%cteam ' + team.get('name') + ' (' + team.get('id') + ')', 'color:' + color + ';');
+								console.groupCollapsed('%cteam ' + team.get('name') + ' (' + team.get('id') + ')' + star, 'color:' + color + ';');
 								console.log(team.toJSON());
 								console.groupEnd();
 							});
