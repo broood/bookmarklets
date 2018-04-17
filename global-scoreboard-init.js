@@ -16,6 +16,28 @@ espn.bookmarklets = espn.bookmarklets || {};
 			scoreboard.leagues.each(function(league) {
 				console.groupCollapsed('league ' + league.get('abbreviation') + ' (' + league.get('id') + ')');
 				console.log(league.toJSON());
+				
+				var draft = league.get('draft');
+				if(draft) {
+					console.groupCollapsed('draft ' + draft.get('name'));
+					console.log(draft.toJSON());
+
+					if(draft.get('rounds')) {
+						draft.get('rounds').each(function(rnd) {
+							console.group('round ' + rnd.get('name') + ' (' + rnd.get('id') + ')');
+							console.log(rnd.toJSON());
+							// go straight to competitions
+							rnd.get('picks').each(function(pick) {
+								console.groupCollapsed('pick ' + pick.get('name') + ' (' + pick.get('id') + ')');
+								console.log(pick.toJSON());
+								console.groupEnd();
+							});
+							console.groupEnd();
+						});
+					}
+
+					console.groupEnd();
+				}
 
 				// debug schedules
 				league.get('schedules').each(function(schedule) {
@@ -83,27 +105,6 @@ espn.bookmarklets = espn.bookmarklets || {};
 							});
 							console.groupEnd();
 						});
-					}
-
-					if(draft) {
-						console.group('draft ' + draft.get('name'));
-						console.log(draft.toJSON());
-
-						if(draft.get('rounds')) {
-							draft.get('rounds').each(function(rnd) {
-								console.group('round ' + rnd.get('name') + ' (' + rnd.get('id') + ')');
-								console.log(rnd.toJSON());
-								// go straight to competitions
-								rnd.get('picks').each(function(pick) {
-									console.groupCollapsed('pick ' + pick.get('name') + ' (' + pick.get('id') + ')');
-									console.log(pick.toJSON());
-									console.groupEnd();
-								});
-								console.groupEnd();
-							});
-						}
-
-						console.groupEnd();
 					}
 
 					console.groupEnd();
